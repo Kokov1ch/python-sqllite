@@ -59,7 +59,7 @@ VALUES
 ("Таинственный остров", 2, 2, 2015, 10),
 ("Бородино", 7, 3, 2015, 12),
 ("Дубровский", 1, 2, 2020, 7),
-("Вокруг свет за 80 дней", 2, 2, 2019, 5),
+("Вокруг света за 80 дней", 2, 2, 2019, 5),
 ("Убийства по алфавиту", 1, 1, 2017, 9),
 ("Затерянный мир", 2, 1, 2020, 3),
 ("Герой нашего времени", 1, 3, 2017, 2),
@@ -76,46 +76,72 @@ VALUES
 ''')
 con.commit()
 cursor = con.cursor()
+# cursor.execute('''
+# SELECT * FROM book
+# ''')
+# print(cursor.fetchall())
+# cursor.execute('''
+# UPDATE book
+# SET available_numbers = available_numbers + (
+# SELECT amount FROM book
+# JOIN genre USING (genre_id)
+# JOIN new_book b USING (title)
+# )
+# WHERE
+# (SELECT title FROM book
+# JOIN publisher USING (publisher_id)
+# JOIN new_book USING (title)
+# WHERE new_book.title = book.title
+# AND new_book.publisher_name = publisher.publisher_name
+# AND new_book.year_publication = book.year_publication)
+# ''')
+# cursor.execute('''
+# SELECT title, (SELECT publisher_name FROM publisher
+# JOIN new_book USING (publisher_name)
+# ) FROM book
+# JOIN new_book USING (title)
+# JOIN publisher USING (publisher_name)
+# WHERE new_book.title = book.title
+# AND new_book.year_publication = book.year_publication
+# AND new_book.publisher_name = publisher.publisher_name
+# ''')
+# cursor.execute('''
+# SELECT title, (SELECT publisher_name FROM publisher
+# JOIN new_book USING (publisher_name)
+# )
+# FROM book
+# ''')
+# print(cursor.fetchall())
+# cursor.execute('''
+# SELECT title, publisher_name FROM new_book
+# JOIN book USING (title)
+# WHERE book.title =
+# ''')
+# print(cursor.fetchall())
 cursor.execute('''
-SELECT * FROM book
+SELECT title, publisher_name FROM new_book
+JOIN publisher USING (publisher_name)
+JOIN book USING (title)
+WHERE book.year_publication = new_book.year_publication
+''')
+print(cursor.fetchall())
+cursor.execute('''
+SELECT *  FROM book
 ''')
 print(cursor.fetchall())
 cursor.execute('''
 UPDATE book
 SET available_numbers = available_numbers + (
-SELECT amount FROM book
-JOIN genre USING (genre_id)
-JOIN new_book b USING (title)
-)
-WHERE
-(SELECT title FROM book
-JOIN publisher USING (publisher_id)
-JOIN new_book USING (title)
-WHERE new_book.title = book.title
-AND new_book.publisher_name = publisher.publisher_name
-AND new_book.year_publication = book.year_publication)
-''')
-cursor.execute('''
-SELECT title, (SELECT publisher_name FROM publisher 
-JOIN new_book USING (publisher_name)
-) FROM book
-JOIN new_book USING (title)
+ SELECT amount FROM new_book
+ )
+ WHERE (SELECT title FROM new_book
 JOIN publisher USING (publisher_name)
-WHERE new_book.title = book.title
-AND new_book.year_publication = book.year_publication
-AND new_book.publisher_name = publisher.publisher_name
-''')
-cursor.execute('''
-SELECT title, (SELECT publisher_name FROM publisher 
-JOIN new_book USING (publisher_name)
-)
-FROM book
+JOIN book USING (title)
+WHERE book.year_publication = new_book.year_publication) = book.title
 ''')
 print(cursor.fetchall())
 cursor.execute('''
-SELECT title, publisher_name FROM new_book
-JOIN publisher USING (publisher_name)
-WHERE new_book.publisher_name = publisher.publisher_name
+SELECT *  FROM book
 ''')
 print(cursor.fetchall())
 con.close()
