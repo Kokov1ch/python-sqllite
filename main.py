@@ -5,4 +5,6 @@
 #import selfTast3
 #import selfTask4
 #import selfTask5
-import selfTask6
+#import selfTask6
+#import lab1_task1
+import new_book

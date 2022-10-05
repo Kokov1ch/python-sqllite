@@ -16,7 +16,7 @@ cursor = con.cursor()
 cursor.execute('''
 SELECT genre_name,count(book.book_id), sum(book.available_numbers), min(book.year_publication) FROM genre
 JOIN book USING(genre_id)
-GROUP BY book.genre_id''')
+GROUP BY genre_id''')
 print(cursor.fetchall())
 # закрываем соединение с базой
 con.close()
