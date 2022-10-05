@@ -14,7 +14,7 @@ con.commit()
 # создаем курсор
 cursor = con.cursor()
 cursor.execute('''SELECT genre_name,count(book.book_id), sum(book.available_numbers), min(book.year_publication) FROM genre
-                    JOIN book ON genre.genre_id=book.genre_id
+                    JOIN book USING(genre_id)
                     group by book.genre_id''')
 print(cursor.fetchall())
 # закрываем соединение с базой

@@ -13,8 +13,12 @@ con.executescript(damp)
 con.commit()
 # создаем курсор
 cursor = con.cursor()
-cursor.execute('''SELECT genre_name FROM genre
-                   JOIN book ON genre.genre_id=book.genre_id ''')
+cursor.execute('''SELECT genre_name, max(res)
+FROM (SELECT genre_name, count(book_id) res FROM genre
+JOIN book USING (genre_id)
+JOIN book_reader USING (book_id)
+GROUP BY genre_id
+ORDER BY genre_name)''')
 print(cursor.fetchall())
 # закрываем соединение с базой
 con.close()
