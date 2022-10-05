@@ -13,9 +13,10 @@ con.executescript(damp)
 con.commit()
 # создаем курсор
 cursor = con.cursor()
-cursor.execute('''SELECT genre_name,count(book.book_id), sum(book.available_numbers), min(book.year_publication) FROM genre
-                    JOIN book USING(genre_id)
-                    group by book.genre_id''')
+cursor.execute('''
+SELECT genre_name,count(book.book_id), sum(book.available_numbers), min(book.year_publication) FROM genre
+JOIN book USING(genre_id)
+GROUP BY book.genre_id''')
 print(cursor.fetchall())
 # закрываем соединение с базой
 con.close()

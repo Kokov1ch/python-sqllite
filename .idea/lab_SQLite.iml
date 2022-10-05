@@ -5,7 +5,7 @@
       <excludeFolder url="file://$MODULE_DIR$/lab_SQLite" />
       <excludeFolder url="file://$MODULE_DIR$/venv" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.10 (python-sqllite)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.10 (lab_SQLite)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>

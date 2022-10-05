@@ -13,10 +13,11 @@ con.executescript(damp)
 con.commit()
 # создаем курсор
 cursor = con.cursor()
-cursor.execute('''SELECT book.title,book_reader.borrow_date, book_reader.return_date, (julianday(book_reader.return_date) - julianday(book_reader.borrow_date)) AS days FROM book
-                    JOIN book_reader USING(book_id)
-                    WHERE book_reader.reader_id=:readerId AND book_reader.return_date IS NOT NULL
-                    order by days desc''', {"readerId": 6})
+cursor.execute('''
+SELECT book.title,book_reader.borrow_date, book_reader.return_date, (julianday(book_reader.return_date) - julianday(book_reader.borrow_date)) AS days FROM book
+JOIN book_reader USING(book_id)
+WHERE book_reader.reader_id=:readerId AND book_reader.return_date IS NOT NULL
+ORDER BY days DESC''', {"readerId": 6})
 print(cursor.fetchall())
 # закрываем соединение с базой
 con.close()
